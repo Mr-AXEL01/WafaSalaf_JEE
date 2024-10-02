@@ -5,6 +5,19 @@
              version="3.2">
     <persistence-unit name="WAFA_SALAF" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+<!--            dataBase properties-->
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/wafasalaf"/>
+            <property name="hibernate.connection.username" value="axel"/>
+            <property name="hibernate.connection.password" value="6631"/>
 
+<!--            hibernate properties-->
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>>
     </persistence-unit>
 </persistence>

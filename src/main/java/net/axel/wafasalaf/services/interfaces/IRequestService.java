@@ -13,7 +13,7 @@ public interface IRequestService {
 
     List<Request> findAllRequests();
 
-    Request updateRequest(String oldName, RequestDto updatedRequest);
+    Request updateRequest(RequestDto dto);
 
-    void deleteRequest(String name);
+    void deleteRequest(UUID id);
 }

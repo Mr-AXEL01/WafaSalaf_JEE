@@ -44,12 +44,26 @@ public class RequestService implements IRequestService {
 
     @Override
     public List<Request> findAllRequests() {
-        return List.of();
+        return requestRepository.findAll();
     }
 
     @Override
-    public Request updateRequest(String oldName, RequestDto updatedRequest) {
-        return null;
+    public Request updateRequest(RequestDto dto) {
+        Request updatedRequest = new Request();
+        updatedRequest.setProject(dto.project());
+        updatedRequest.setWork(dto.work());
+        updatedRequest.setAmountLoan(dto.amountLoan());
+        updatedRequest.setDuration(dto.duration());
+        updatedRequest.setMonthly(dto.monthly());
+        updatedRequest.setPhone(dto.phone());
+        updatedRequest.setCivility(dto.civility());
+        updatedRequest.setLast_name(dto.lastName());
+        updatedRequest.setFirst_name(dto.firstName());
+        updatedRequest.setBirthday(dto.birthday());
+        updatedRequest.setHiringDay(dto.hiringDay());
+        updatedRequest.setIncome(dto.income());
+        updatedRequest.setHaveCredit(dto.haveCredit());
+        return requestRepository.update(updatedRequest);
     }
 
     @Override

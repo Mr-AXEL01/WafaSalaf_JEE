@@ -87,6 +87,18 @@ public class RequestRepository implements IRequestRepository {
 
     @Override
     public void delete(UUID id) {
-
+        try {
+            transaction.begin();
+            Request request = entityManager.find(Request.class, id);
+            if (request != null) {
+            entityManager.remove(request);
+            }
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
     }
 }

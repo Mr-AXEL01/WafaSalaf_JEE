@@ -71,7 +71,18 @@ public class RequestRepository implements IRequestRepository {
 
     @Override
     public Request update(Request request) {
-        return null;
+        Request updatedRequest = null;
+        try {
+            transaction.begin();
+            updatedRequest = entityManager.merge(request);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return updatedRequest;
     }
 
     @Override

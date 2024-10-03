@@ -67,7 +67,7 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    public void deleteRequest(String name) {
-
+    public void deleteRequest(UUID id) {
+        requestRepository.delete(id);
     }
 }

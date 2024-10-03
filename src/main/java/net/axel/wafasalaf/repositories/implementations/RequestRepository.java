@@ -56,7 +56,17 @@ public class RequestRepository implements IRequestRepository {
     @Override
     public List<Request> findAll() {
         List<Request> requests = new ArrayList<>();
-        return List.of();
+        try {
+            transaction.begin();
+            requests = entityManager.createQuery("SELECT r FROM Request r", Request.class).getResultList();
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return requests;
     }
 
     @Override

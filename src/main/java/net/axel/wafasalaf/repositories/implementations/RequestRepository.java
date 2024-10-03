@@ -2,7 +2,6 @@ package net.axel.wafasalaf.repositories.implementations;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import net.axel.wafasalaf.config.ConnectionSingleton;
 import net.axel.wafasalaf.models.entities.Request;
 import net.axel.wafasalaf.repositories.interfaces.IRequestRepository;

@@ -39,11 +39,18 @@ public class RequestRepository implements IRequestRepository {
 
     @Override
     public Optional<Request> findById(UUID id) {
+        Request request = null;
         try {
             transaction.begin();
-            entityManager.find()
+            request = entityManager.find(Request.class, id);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
         }
-        return Optional.empty();
+        return Optional.ofNullable(request);
     }
 
     @Override

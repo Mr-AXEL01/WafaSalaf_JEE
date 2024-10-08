@@ -171,6 +171,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentStep < steps.length) {
             currentStep++;
             showStep(currentStep);
+        } else {
+            const form = document.querySelector('form');
+            console.log(form);
+            form.submit();
         }
     });
 });

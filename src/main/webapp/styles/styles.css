@@ -76,6 +76,7 @@ h1 {
 }
 .container--parts {
   display: flex;
+  justify-content: center;
 }
 .container--right {
   background-image: url(https://www.wafasalaf.ma/themes/wafasalaf/assets/img/recap-background.png);

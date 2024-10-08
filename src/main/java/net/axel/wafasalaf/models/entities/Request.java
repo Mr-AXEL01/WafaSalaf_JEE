@@ -64,17 +64,21 @@ public class Request implements Serializable {
     @Column(name= "first_name", nullable = false)
     private String first_name;
 
+    @NotBlank(message = "CIN is required.")
+    @Column(name = "cin", nullable = false)
+    private String cin;
+
     @NotNull(message = "Birthday is required")
     @Past(message = "Birthday must be a past date")
-    @Column(name = "birthday", nullable = false)
+    @Column(name = "birthDate", nullable = false)
     @Temporal(TemporalType.DATE)
-    private LocalDate birthday;
+    private LocalDate birthDate;
 
     @NotNull(message = "Hiring day is required")
     @Past(message = "Hiring day must be a past date")
-    @Column(name = "hiring_day", nullable = false)
+    @Column(name = "hiring_date", nullable = false)
     @Temporal(TemporalType.DATE)
-    private LocalDate hiringDay;
+    private LocalDate hiringDate;
 
     @Min(value = 1, message = "Income must be positive")
     @Column(name = "income", nullable = false)
@@ -86,8 +90,7 @@ public class Request implements Serializable {
     public Request() {
     }
 
-    public Request(UUID id, String project, String work, double amountLoan, int duration, double monthly, String email, String phone, Civility civility, String last_name, String first_name, LocalDate birthday, LocalDate hiringDay, double income, boolean haveCredit) {
-        this.id = id;
+    public Request(String project, String work, double amountLoan, int duration, double monthly, String email, String phone, Civility civility, String last_name, String first_name, String cin, LocalDate birthDate, LocalDate hiringDate, double income, boolean haveCredit) {
         this.project = project;
         this.work = work;
         this.amountLoan = amountLoan;
@@ -98,10 +101,16 @@ public class Request implements Serializable {
         this.civility = civility;
         this.last_name = last_name;
         this.first_name = first_name;
-        this.birthday = birthday;
-        this.hiringDay = hiringDay;
+        this.cin = cin;
+        this.birthDate = birthDate;
+        this.hiringDate = hiringDate;
         this.income = income;
         this.haveCredit = haveCredit;
+    }
+
+    public Request(UUID id, String project, String work, double amountLoan, int duration, double monthly, String email, String phone, Civility civility, String last_name, String first_name, String cin, LocalDate birthDate, LocalDate hiringDate, double income, boolean haveCredit) {
+        this(project, work, amountLoan, duration, monthly, email, phone, civility, last_name, first_name, cin, birthDate, hiringDate, income, haveCredit);
+        this.id = id;
     }
 
     public UUID getId() {
@@ -192,20 +201,28 @@ public class Request implements Serializable {
         this.first_name = first_name;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
+    public String getCin() {
+        return cin;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public void setCin(String cin) {
+        this.cin = cin;
     }
 
-    public LocalDate getHiringDay() {
-        return hiringDay;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setHiringDay(LocalDate hiringDay) {
-        this.hiringDay = hiringDay;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public LocalDate getHiringDate() {
+        return hiringDate;
+    }
+
+    public void setHiringDate(LocalDate hiringDate) {
+        this.hiringDate = hiringDate;
     }
 
     public double getIncome() {
@@ -222,5 +239,27 @@ public class Request implements Serializable {
 
     public void setHaveCredit(boolean haveCredit) {
         this.haveCredit = haveCredit;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "id=" + id +
+                ", project='" + project + '\'' +
+                ", work='" + work + '\'' +
+                ", amountLoan=" + amountLoan +
+                ", duration=" + duration +
+                ", monthly=" + monthly +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", civility=" + civility +
+                ", last_name='" + last_name + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", cin='" + cin + '\'' +
+                ", birthDate=" + birthDate +
+                ", hiringDate=" + hiringDate +
+                ", income=" + income +
+                ", haveCredit=" + haveCredit +
+                '}';
     }
 }

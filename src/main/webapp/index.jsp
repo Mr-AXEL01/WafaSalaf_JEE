@@ -33,7 +33,7 @@
                 </div>
                 <!-- form -->
                 <div class="container--left__form">
-                    <form >
+                    <form action="<%= request.getContextPath() %>/request" method="POST">
                         <div class="step1" id="step1">
                             <div class="options">
                                 <label for="project">My project</label><br>
@@ -62,21 +62,21 @@
                                     <label for="amount">Amount (in DH)</label>
                                     <input class="number" type="number" id="amount-number" name="amount" value="10000">
                                 </div>
-                                <input class="range" type="range" id="amount" name="amount" min="5000" max="600000">
+                                <input class="range" type="range" id="amount" name="amount-range" min="5000" max="600000">
                             </div>
                             <div class="simulator">
                                 <div class="slider">
                                     <label for="duration">Duration (in months)</label>
                                     <input class="number" type="number" id="duration-number" name="duration" value="24">
                                 </div>
-                                <input class="range" type="range" id="duration" name="duration" min="12" max="120" >
+                                <input class="range" type="range" id="duration" name="duration-range" min="12" max="120" >
                             </div>
                             <div class="simulator">
                                 <div class="slider">
                                     <label for="monthly">Monthly (in DH)</label>
                                     <input class="number" type="number" id="monthly-number" name="monthly" value="445.93">
                                 </div>
-                                <input class="range" type="range" id="monthly" name="monthly" >
+                                <input class="range" type="range" id="monthly" name="monthly-range" >
                             </div>
                         </div>
                         <div class="step2" id="step2">
@@ -94,15 +94,15 @@
                                 <label for="civility">Civility</label>
                                 <div class="choices">
                                     <div class="choice">
-                                        <input type="radio" id="madam" name="civility" value="madam">
+                                        <input type="radio" id="madam" name="civility" value="MADAM">
                                         <label for="madam">Madam</label>
                                     </div>
                                     <div class="choice">
-                                        <input type="radio" id="miss" name="civility" value="miss">
+                                        <input type="radio" id="miss" name="civility" value="MISS">
                                         <label for="miss">Miss</label>
                                     </div>
                                     <div class="choice">
-                                        <input type="radio" id="mr" name="civility" value="mr">
+                                        <input type="radio" id="mr" name="civility" value="MR">
                                         <label for="mr">Mr</label>
                                     </div>
                                 </div>

@@ -6,6 +6,7 @@ import net.axel.wafasalaf.models.enums.Civility;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -42,7 +43,6 @@ public class Request implements Serializable {
     @Column(name = "email", nullable = false)
     private String email;
 
-
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp = "^(06|07|\\+212)[0-9]{8}$", message = "Invalid number please enter a valid moroccan number.")
     @Column(name = "phone", nullable = false)
@@ -57,7 +57,6 @@ public class Request implements Serializable {
     @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     @Column(name= "last_name", nullable = false)
     private String last_name;
-
 
     @NotBlank(message = "First name is required")
     @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
@@ -87,6 +86,9 @@ public class Request implements Serializable {
     @Column(name = "have_credit", nullable = false)
     private boolean haveCredit;
 
+    @OneToMany(mappedBy = "requests")
+    Set<RequestStatus> requestStatuses;
+
     public Request() {
     }
 
@@ -111,6 +113,11 @@ public class Request implements Serializable {
     public Request(UUID id, String project, String work, double amountLoan, int duration, double monthly, String email, String phone, Civility civility, String last_name, String first_name, String cin, LocalDate birthDate, LocalDate hiringDate, double income, boolean haveCredit) {
         this(project, work, amountLoan, duration, monthly, email, phone, civility, last_name, first_name, cin, birthDate, hiringDate, income, haveCredit);
         this.id = id;
+    }
+
+    public Request(UUID id, String project, String work, double amountLoan, int duration, double monthly, String email, String phone, Civility civility, String last_name, String first_name, String cin, LocalDate birthDate, LocalDate hiringDate, double income, boolean haveCredit, Set<RequestStatus> requestStatuses) {
+        this(id, project, work, amountLoan, duration, monthly, email, phone, civility, last_name, first_name, cin, birthDate, hiringDate, income, haveCredit);
+        this.requestStatuses = requestStatuses;
     }
 
     public UUID getId() {
@@ -239,6 +246,14 @@ public class Request implements Serializable {
 
     public void setHaveCredit(boolean haveCredit) {
         this.haveCredit = haveCredit;
+    }
+
+    public Set<RequestStatus> getRequestStatuses() {
+        return requestStatuses;
+    }
+
+    public void setRequestStatuses(Set<RequestStatus> requestStatuses) {
+        this.requestStatuses = requestStatuses;
     }
 
     @Override

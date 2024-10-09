@@ -178,5 +178,24 @@
 
 <script src="./js/form.js"></script>
 <script src="./js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('status') && urlParams.get('status') === 'success') {
+        Swal.fire({
+            title: 'Success!',
+            text: 'Your request has been successfully created.',
+            icon: 'success',
+            timer: 3000,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            toast: true,
+            customClass: {
+                popup: 'small-sweetalert'
+            }
+        });
+    }
+</script>
+
 </body>
 </html>

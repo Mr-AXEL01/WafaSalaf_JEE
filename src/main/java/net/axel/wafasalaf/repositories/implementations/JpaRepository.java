@@ -87,7 +87,19 @@ public class JpaRepository<T, ID> implements IJpaRepository<T, ID> {
     }
 
     @Override
-    public void delete(Object o) {
-
+    public void delete(ID id) {
+        try {
+            transaction.begin();
+            T entity = entityManager.find(entityType, id);
+            if (entity != null) {
+                entityManager.remove(entity);
+            }
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
     }
 }

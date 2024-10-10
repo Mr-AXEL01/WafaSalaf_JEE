@@ -3,10 +3,12 @@ package net.axel.wafasalaf.repositories.implementations;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import net.axel.wafasalaf.config.ConnectionSingleton;
+import net.axel.wafasalaf.models.entities.Request;
 import net.axel.wafasalaf.repositories.interfaces.IJpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class JpaRepository<T, ID> implements IJpaRepository<T, ID> {
 
@@ -36,8 +38,19 @@ public class JpaRepository<T, ID> implements IJpaRepository<T, ID> {
     }
 
     @Override
-    public Optional findById(Object o) {
-        return Optional.empty();
+    public Optional<T> findById(ID id) {
+        T entity = null;
+        try {
+            transaction.begin();
+            entity = entityManager.find(entityType, id);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return Optional.ofNullable(entity);
     }
 
     @Override

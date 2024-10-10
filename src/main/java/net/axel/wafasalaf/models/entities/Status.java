@@ -24,14 +24,17 @@ public class Status implements Serializable {
     public Status() {
     }
 
-    public Status(UUID id, String name) {
-        this.id = id;
+    public Status(String name) {
         this.name = name;
     }
 
-    public Status(UUID id, String name, Set<RequestStatus> requestStatuses) {
+    public Status(UUID id, String name) {
+        this(name);
         this.id = id;
-        this.name = name;
+    }
+
+    public Status(UUID id, String name, Set<RequestStatus> requestStatuses) {
+        this(id, name);
         this.requestStatuses = requestStatuses;
     }
 

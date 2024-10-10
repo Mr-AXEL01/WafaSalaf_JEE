@@ -23,17 +23,21 @@ public class RequestStatus implements Serializable {
     Status status;
 
     @NotBlank(message = "Date is required")
-    @Column(name = "date", nullable = false)
+    @Column(name = "changedAt", nullable = false)
     private LocalDate changedAt;
+
+    @Column(name = "description")
+    private String description;
 
     public RequestStatus() {
     }
 
-    public RequestStatus(UUID id, Request request, Status status, LocalDate changedAt) {
+    public RequestStatus(UUID id, Request request, Status status, LocalDate changedAt, String description) {
         this.id = id;
         this.request = request;
         this.status = status;
         this.changedAt = changedAt;
+        this.description = description;
     }
 
     public UUID getId() {
@@ -68,6 +72,14 @@ public class RequestStatus implements Serializable {
         this.changedAt = changedAt;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "RequestStatus{" +
@@ -75,6 +87,7 @@ public class RequestStatus implements Serializable {
                 ", request=" + request +
                 ", status=" + status +
                 ", changedAt=" + changedAt +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

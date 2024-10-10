@@ -71,8 +71,19 @@ public class JpaRepository<T, ID> implements IJpaRepository<T, ID> {
     }
 
     @Override
-    public Object update(Object entity) {
-        return null;
+    public T update(T entity) {
+        T updatedEntity = null;
+        try {
+            transaction.begin();
+            updatedEntity = entityManager.merge(entity);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return updatedEntity;
     }
 
     @Override

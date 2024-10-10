@@ -6,6 +6,7 @@ import net.axel.wafasalaf.config.ConnectionSingleton;
 import net.axel.wafasalaf.models.entities.Request;
 import net.axel.wafasalaf.repositories.interfaces.IJpaRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,8 +55,19 @@ public class JpaRepository<T, ID> implements IJpaRepository<T, ID> {
     }
 
     @Override
-    public List findAll() {
-        return List.of();
+    public List<T> findAll() {
+        List<T> entities = new ArrayList<>();
+        try {
+            transaction.begin();
+            entities = entityManager.createQuery("SELECT e FROM " + entityType.getSimpleName() + " e", entityType).getResultList();
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return entities;
     }
 
     @Override

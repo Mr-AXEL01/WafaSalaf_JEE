@@ -22,7 +22,17 @@ public class JpaRepository<T, ID> implements IJpaRepository<T, ID> {
 
     @Override
     public T save(T entity) {
-        return null;
+        try {
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
+        } catch(RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return entity;
     }
 
     @Override

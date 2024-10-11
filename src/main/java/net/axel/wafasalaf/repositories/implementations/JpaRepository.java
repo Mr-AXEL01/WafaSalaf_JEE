@@ -1,7 +1,6 @@
 package net.axel.wafasalaf.repositories.implementations;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import net.axel.wafasalaf.config.ConnectionSingleton;
 import net.axel.wafasalaf.repositories.interfaces.IJpaRepository;
@@ -11,8 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class JpaRepository<T, ID> implements IJpaRepository<T, ID> {
-
-
     private final Class<T> entityType;
 
     public JpaRepository(Class<T> entityType) {

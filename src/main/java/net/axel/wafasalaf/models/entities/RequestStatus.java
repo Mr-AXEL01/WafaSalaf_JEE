@@ -16,11 +16,11 @@ public class RequestStatus implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "request_id")
-    Request request;
+    private Request request;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    Status status;
+    private Status status;
 
     @NotBlank(message = "Date is required")
     @Column(name = "changedAt", nullable = false)

@@ -1,5 +1,6 @@
 package net.axel.wafasalaf.config;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
@@ -12,5 +13,9 @@ public class ConnectionSingleton {
 
     public static EntityManagerFactory entityManagerFactory() {
         return ENTITY_MANAGER_FACTORY;
+    }
+
+    public static EntityManager getEntityManager() {
+        return entityManagerFactory().createEntityManager();
     }
 }

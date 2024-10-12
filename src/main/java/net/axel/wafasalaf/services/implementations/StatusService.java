@@ -27,4 +27,10 @@ public class StatusService implements IStatusService {
         return statusRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Error getting status by ID : " + id));
     }
+
+    @Override
+    public Status findStatusByName(String statusName) {
+        return statusRepository.findByName(statusName)
+                .orElseThrow(() -> new RuntimeException("Error getting status by name : " + statusName));
+    }
 }

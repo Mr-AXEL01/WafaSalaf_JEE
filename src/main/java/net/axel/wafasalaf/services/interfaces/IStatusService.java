@@ -10,4 +10,6 @@ public interface IStatusService {
 
     Status findStatusById(UUID id);
 
+    Status findStatusByName(String statusName);
+
 }

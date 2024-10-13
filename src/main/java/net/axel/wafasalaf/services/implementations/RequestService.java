@@ -1,15 +1,15 @@
 package net.axel.wafasalaf.services.implementations;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 import net.axel.wafasalaf.exception.ValidationRequestException;
 import net.axel.wafasalaf.models.dtos.RequestDto;
 import net.axel.wafasalaf.models.entities.Request;
-import net.axel.wafasalaf.repositories.implementations.RequestRepository;
 import net.axel.wafasalaf.repositories.interfaces.IRequestRepository;
 import net.axel.wafasalaf.services.interfaces.IRequestService;
+import net.axel.wafasalaf.services.interfaces.IRequestStatusService;
 
 import java.util.List;
 import java.util.Map;
@@ -17,13 +17,17 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
 public class RequestService implements IRequestService {
     private final IRequestRepository requestRepository;
+    private final IRequestStatusService requestStatusService;
     private final Validator validator;
 
-    public RequestService(RequestRepository requestRepository) {
+    @Inject
+    public RequestService(IRequestRepository requestRepository, IRequestStatusService requestStatusService, Validator validator) {
         this.requestRepository = requestRepository;
-        this.validator = Validation.buildDefaultValidatorFactory().getValidator();
+        this.requestStatusService = requestStatusService;
+        this.validator = validator;
     }
 
     @Override
@@ -35,11 +39,7 @@ public class RequestService implements IRequestService {
             key => field name
             value => message
              */
-            Map<String, String> errors = constraintViolations.stream()
-                    .collect(Collectors.toMap(
-                            c -> c.getPropertyPath().toString(),
-                            ConstraintViolation::getMessage
-                    ));
+            Map<String, String> errors = constraintViolations.stream().collect(Collectors.toMap(c -> c.getPropertyPath().toString(), ConstraintViolation::getMessage));
             throw new ValidationRequestException(errors);
         }
 
@@ -50,13 +50,15 @@ public class RequestService implements IRequestService {
 
 
         Request request = new Request(dto.project(), dto.work(), dto.amountLoan(), dto.duration(), monthly, dto.email(), dto.phone(), dto.civility(), dto.lastName(), dto.firstName(), dto.cin(), dto.birthDate(), dto.hiringDate(), dto.income(), dto.haveCredit());
-        return requestRepository.save(request);
+        Request savedRequest = requestRepository.save(request);
+
+        requestStatusService.saveRequestStatus(savedRequest);
+        return savedRequest;
     }
 
     @Override
     public Request findRequestById(UUID id) {
-        return requestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Error getting request by ID : " + id));
+        return requestRepository.findById(id).orElseThrow(() -> new RuntimeException("Error getting request by ID : " + id));
     }
 
     @Override
@@ -90,7 +92,7 @@ public class RequestService implements IRequestService {
 
     private Double checkCalcul(double amount, int duration) {
         final double interestRate = 0.012;
-        final double amountTotal = amount * ( 1 + interestRate);
+        final double amountTotal = amount * (1 + interestRate);
         return amountTotal / duration;
     }
 }

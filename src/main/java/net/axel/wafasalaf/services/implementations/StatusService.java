@@ -1,18 +1,21 @@
 package net.axel.wafasalaf.services.implementations;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import net.axel.wafasalaf.models.dtos.StatusDto;
 import net.axel.wafasalaf.models.entities.Status;
-import net.axel.wafasalaf.repositories.implementations.StatusRepository;
 import net.axel.wafasalaf.repositories.interfaces.IStatusRepository;
 import net.axel.wafasalaf.services.interfaces.IStatusService;
 
 import java.util.UUID;
 
+@ApplicationScoped
 public class StatusService implements IStatusService {
 
     private final IStatusRepository statusRepository;
 
-    public StatusService(StatusRepository statusRepository) {
+    @Inject
+    public StatusService(IStatusRepository statusRepository) {
         this.statusRepository = statusRepository;
     }
 

@@ -2,9 +2,10 @@ package net.axel.wafasalaf.models.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -22,9 +23,9 @@ public class RequestStatus implements Serializable {
     @JoinColumn(name = "status_id")
     private Status status;
 
-    @NotBlank(message = "Date is required")
-    @Column(name = "changedAt", nullable = false)
-    private LocalDate changedAt;
+    @NotNull
+    @Column(name = "changed_date", nullable = false)
+    private LocalDateTime changedDate;
 
     @Column(name = "description")
     private String description;
@@ -32,12 +33,16 @@ public class RequestStatus implements Serializable {
     public RequestStatus() {
     }
 
-    public RequestStatus(UUID id, Request request, Status status, LocalDate changedAt, String description) {
-        this.id = id;
+    public RequestStatus(Request request, Status status, LocalDateTime changedDate, String description) {
         this.request = request;
         this.status = status;
-        this.changedAt = changedAt;
+        this.changedDate = changedDate;
         this.description = description;
+    }
+
+    public RequestStatus(UUID id, Request request, Status status, LocalDateTime changedDate, String description) {
+        this(request, status, changedDate, description);
+        this.id = id;
     }
 
     public UUID getId() {
@@ -64,12 +69,12 @@ public class RequestStatus implements Serializable {
         this.status = status;
     }
 
-    public LocalDate getChangedAt() {
-        return changedAt;
+    public LocalDateTime getChangedDate() {
+        return changedDate;
     }
 
-    public void setChangedAt(LocalDate changedAt) {
-        this.changedAt = changedAt;
+    public void setChangedDate(LocalDateTime changedDate) {
+        this.changedDate = changedDate;
     }
 
     public String getDescription() {
@@ -86,7 +91,7 @@ public class RequestStatus implements Serializable {
                 "id=" + id +
                 ", request=" + request +
                 ", status=" + status +
-                ", changedAt=" + changedAt +
+                ", changeDate=" + changedDate +
                 ", description='" + description + '\'' +
                 '}';
     }

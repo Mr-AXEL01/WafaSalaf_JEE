@@ -1,15 +1,13 @@
 package net.axel.wafasalaf.web;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.axel.wafasalaf.exception.ValidationRequestException;
 import net.axel.wafasalaf.models.dtos.RequestDto;
-import net.axel.wafasalaf.models.entities.Request;
 import net.axel.wafasalaf.models.enums.Civility;
-import net.axel.wafasalaf.repositories.implementations.RequestRepository;
-import net.axel.wafasalaf.services.implementations.RequestService;
 import net.axel.wafasalaf.services.interfaces.IRequestService;
 import org.jboss.logging.Logger;
 
@@ -22,12 +20,14 @@ public class RequestServlet extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(RequestServlet.class.getName());
 
-    //@Inject
+    @Inject
     private IRequestService requestService;
+
 
     @Override
     public void init() {
-        requestService = new RequestService(new RequestRepository());
+        //requestService = new RequestService(new RequestRepository());
+        //requestService.setRequestStatusService(new RequestStatusService(new RequestStatusRepository(), new StatusService(new StatusRepository())));
     }
 
     @Override
@@ -70,12 +70,8 @@ public class RequestServlet extends HttpServlet {
                     haveCredit
             );
 
-            Request request = requestService.saveRequest(requestDto);
-//            res.setStatus(HttpServletResponse.SC_CREATED);
-//            res.getWriter().write("Request successfully created" + request);
-
+            requestService.saveRequest(requestDto);
             res.sendRedirect(req.getContextPath() + "/?status=success");
-
         } catch (ValidationRequestException e) {
             logger.error("Validation error: " + e.getMessage());
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);

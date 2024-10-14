@@ -3,6 +3,7 @@ package net.axel.wafasalaf.services.interfaces;
 import net.axel.wafasalaf.models.dtos.StatusDto;
 import net.axel.wafasalaf.models.entities.Status;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface IStatusService {
@@ -12,4 +13,5 @@ public interface IStatusService {
 
     Status findStatusByName(String statusName);
 
+    List<Status> findAllStatuses();
 }

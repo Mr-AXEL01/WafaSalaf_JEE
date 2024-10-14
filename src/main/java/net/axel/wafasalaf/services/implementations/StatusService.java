@@ -7,6 +7,7 @@ import net.axel.wafasalaf.models.entities.Status;
 import net.axel.wafasalaf.repositories.interfaces.IStatusRepository;
 import net.axel.wafasalaf.services.interfaces.IStatusService;
 
+import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -35,5 +36,10 @@ public class StatusService implements IStatusService {
     public Status findStatusByName(String statusName) {
         return statusRepository.findByName(statusName)
                 .orElseThrow(() -> new RuntimeException("Error getting status by name : " + statusName));
+    }
+
+    @Override
+    public List<Status> findAllStatuses() {
+        return statusRepository.findAll();
     }
 }

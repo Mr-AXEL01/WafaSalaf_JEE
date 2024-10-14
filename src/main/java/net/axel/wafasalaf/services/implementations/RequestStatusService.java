@@ -2,10 +2,12 @@ package net.axel.wafasalaf.services.implementations;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import net.axel.wafasalaf.models.dtos.RequestStatusDto;
 import net.axel.wafasalaf.models.entities.Request;
 import net.axel.wafasalaf.models.entities.RequestStatus;
 import net.axel.wafasalaf.models.entities.Status;
 import net.axel.wafasalaf.repositories.interfaces.IRequestStatusRepository;
+import net.axel.wafasalaf.services.interfaces.IRequestService;
 import net.axel.wafasalaf.services.interfaces.IRequestStatusService;
 import net.axel.wafasalaf.services.interfaces.IStatusService;
 
@@ -17,11 +19,13 @@ public class RequestStatusService implements IRequestStatusService {
 
     private final IRequestStatusRepository requestStatusRepository;
     private final IStatusService statusService;
+    private final IRequestService requestService;
 
     @Inject
-    public RequestStatusService(IRequestStatusRepository requestStatusRepository, IStatusService statusService) {
+    public RequestStatusService(IRequestStatusRepository requestStatusRepository, IStatusService statusService, IRequestService requestService) {
         this.requestStatusRepository = requestStatusRepository;
         this.statusService = statusService;
+        this.requestService = requestService;
     }
 
     @Override
@@ -35,7 +39,11 @@ public class RequestStatusService implements IRequestStatusService {
     }
 
     @Override
-    public RequestStatus updateRequestStatus(UUID id) {
-        return null;
+    public RequestStatus updateRequestStatus(RequestStatusDto dto) {
+        Request request = requestService.findRequestById(dto.requestId());
+        Status status = statusService.findStatusById(dto.statusId());
+        LocalDateTime changedDate = LocalDateTime.now();
+        RequestStatus updatedRequestStatus = new RequestStatus(request, status, changedDate, dto.description());
+        return requestStatusRepository.save(updatedRequestStatus);
     }
 }

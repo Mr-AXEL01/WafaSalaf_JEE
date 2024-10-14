@@ -1,5 +1,6 @@
 package net.axel.wafasalaf.services.interfaces;
 
+import net.axel.wafasalaf.models.dtos.RequestStatusDto;
 import net.axel.wafasalaf.models.entities.Request;
 import net.axel.wafasalaf.models.entities.RequestStatus;
 
@@ -9,5 +10,5 @@ public interface IRequestStatusService {
 
     RequestStatus saveRequestStatus(Request request);
 
-    RequestStatus updateRequestStatus(UUID id);
+    RequestStatus updateRequestStatus(RequestStatusDto dto);
 }

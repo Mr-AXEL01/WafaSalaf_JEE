@@ -11,6 +11,8 @@ import net.axel.wafasalaf.repositories.interfaces.IRequestRepository;
 import net.axel.wafasalaf.services.interfaces.IRequestService;
 import net.axel.wafasalaf.services.interfaces.IRequestStatusService;
 
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -62,8 +64,23 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    public List<Request> findAllRequests() {
-        return requestRepository.findAll();
+    public List<Request> findAllRequests(String status, LocalDateTime hiringDate) {
+        List<Request> allRequests = requestRepository.findAll();
+
+        if (status != null && !status.isEmpty()) {
+            allRequests = allRequests.stream()
+                    .filter(request -> request.getRequestStatuses().stream()
+                            .anyMatch(reqStatus -> reqStatus.getStatus().getName().equalsIgnoreCase(status)))
+                    .collect(Collectors.toList());
+        }
+
+        if(hiringDate != null) {
+            allRequests = allRequests.stream()
+                    .filter(request -> request.getHiringDate().isEqual(ChronoLocalDate.from(hiringDate)))
+                    .toList();
+        }
+
+        return allRequests;
     }
 
     @Override

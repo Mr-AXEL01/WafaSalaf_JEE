@@ -86,7 +86,7 @@ public class Request implements Serializable {
     @Column(name = "have_credit", nullable = false)
     private boolean haveCredit;
 
-    @OneToMany(mappedBy = "request")
+    @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
     Set<RequestStatus> requestStatuses;
 
     public Request() {

@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/styles.css">
     <title>Admin-manage requests</title>
 </head>
-<body>
+<body class = "admin-requests">
 <h1>ALL Requests</h1>
 <form method="get" action="${pageContext.request.contextPath}/admin/requests">
     <label for="status">Status:</label>

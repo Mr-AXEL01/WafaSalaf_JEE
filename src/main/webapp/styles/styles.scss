@@ -454,3 +454,224 @@ h1{
   width: 250px !important;
   font-size: 14px !important;
 }
+
+//admin
+
+.admin-requests {
+  background-color: $light;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  margin: 0 auto;
+  padding: 2rem;
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: $dark-blue;
+  }
+
+  form {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+
+    label {
+      font-weight: bold;
+      color: $dark-blue;
+    }
+
+    select, input[type="date"] {
+      padding: 0.5rem;
+      border: 1px solid $gray-dark;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    input[type="submit"] {
+      background-color: $blue;
+      color: $white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($blue, 10%);
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: $white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid $gray-light;
+    }
+
+    th {
+      background-color: $blue;
+      color: $white;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: $light;
+    }
+
+    tr:hover {
+      background-color: $dark-blue;
+    }
+
+    a {
+      color: $blue;
+      text-decoration: none;
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@include tablet {
+  .admin-requests {
+    padding: 1rem;
+
+    form {
+      flex-direction: column;
+      align-items: stretch;
+
+      select, input[type="date"], input[type="submit"] {
+        width: 100%;
+      }
+    }
+
+    table {
+      font-size: 0.9rem;
+
+      th, td {
+        padding: 0.75rem;
+      }
+    }
+  }
+}
+
+// request details
+
+.request-details {
+  background-color: $light;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  margin: 0 auto;
+  padding: 2rem;
+  color: $dark-blue;
+
+  h2, h3 {
+    color: $dark-blue;
+    margin-bottom: 1rem;
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-collapse: collapse;
+    background-color: $white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid $gray-light;
+    }
+
+    th {
+      background-color: $blue;
+      color: $white;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background-color: $light;
+    }
+  }
+
+  form {
+    background-color: $white;
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid $gray-dark;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    input[type="submit"] {
+      background-color: $blue;
+      color: $white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($blue, 10%);
+      }
+    }
+  }
+
+  .status-history {
+    table {
+      th {
+        background-color: $dark-blue;
+      }
+
+      td {
+        &:first-child {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+@include tablet {
+  .request-details {
+    padding: 1rem;
+
+    table, form {
+      font-size: 0.9rem;
+    }
+
+    form {
+      padding: 1rem;
+    }
+  }
+}

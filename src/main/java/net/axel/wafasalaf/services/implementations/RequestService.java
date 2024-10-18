@@ -60,7 +60,8 @@ public class RequestService implements IRequestService {
 
     @Override
     public Request findRequestById(UUID id) {
-        return requestRepository.findById(id).orElseThrow(() -> new RuntimeException("Error getting request by ID : " + id));
+        return requestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error getting request by ID : " + id));
     }
 
     @Override

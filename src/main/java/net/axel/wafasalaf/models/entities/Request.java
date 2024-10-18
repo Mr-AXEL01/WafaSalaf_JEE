@@ -3,9 +3,11 @@ package net.axel.wafasalaf.models.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import net.axel.wafasalaf.models.enums.Civility;
+import net.axel.wafasalaf.repositories.implementations.RequestStatusRepository;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -87,7 +89,7 @@ public class Request implements Serializable {
     private boolean haveCredit;
 
     @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
-    Set<RequestStatus> requestStatuses;
+    Set<RequestStatus> requestStatuses = new HashSet<>();
 
     public Request() {
     }
@@ -254,6 +256,10 @@ public class Request implements Serializable {
 
     public void setRequestStatuses(Set<RequestStatus> requestStatuses) {
         this.requestStatuses = requestStatuses;
+    }
+
+    public void addRequestStatus(RequestStatus requestStatus){
+        this.requestStatuses.add(requestStatus);
     }
 
     @Override
